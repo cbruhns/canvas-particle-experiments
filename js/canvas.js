@@ -5,18 +5,24 @@ canvas.height = window.innerHeight;
 var c = canvas.getContext('2d');
 
 
+var mouse = {
+    x: undefined,
+    y: undefined
+};
+
 function Circle(x,y,dx,dy,rad){
     this.x = x;
     this.y = y;
     this.dx = dx;
     this.dy = dy;
     this.rad = rad;
+    this.a = 1;
 
     this.draw = function (){
         c.beginPath();
         c.arc(this.x, this.y, this.rad, 0, Math.PI*2, false);
-        c.fill();
-        c.fillStyle = 'red';
+        c.stroke();
+        c.strokeStyle = 'rgba(255,0,0,'+this.a+')';
     }
 
     this.update = function(){
@@ -29,6 +35,7 @@ function Circle(x,y,dx,dy,rad){
 
         this.x += this.dx;
         this.y += this.dy;
+        this.a = this.a-0.05;
 
         this.draw();
     }
@@ -36,16 +43,13 @@ function Circle(x,y,dx,dy,rad){
 }
 
 var circleArray = [];
-for (var i = 0; i < 100; i++) {
-    var x = Math.random() * (window.innerWidth - radius * 2) + radius;
-    var y = Math.random() * (window.innerHeight - radius * 2) + radius;
-    var dx = (Math.random() - 0.5) * 4;
-    var dy = (Math.random() - 0.5) * 4;
-    var radius = Math.floor(Math.random() * 10)+3;
-    circleArray.push(new Circle(x,y,dx,dy,radius));
-}
-console.log(circleArray);
-
+window.addEventListener('mousemove', function(event){
+    mouse.x = event.x;
+    mouse.y = event.y;
+    var dx = (Math.random() - 0.5) * 2;
+    var dy = (Math.random() - 0.5) * 2;
+    circleArray.push(new Circle(mouse.x, mouse.y,dx,dy,40));
+});
 
 
 function animate(){
