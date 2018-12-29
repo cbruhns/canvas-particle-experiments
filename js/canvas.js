@@ -5,7 +5,6 @@ canvas.height = window.innerHeight;
 var c = canvas.getContext('2d');
 
 
-
 function Circle(x,y,dx,dy,rad){
     this.x = x;
     this.y = y;
