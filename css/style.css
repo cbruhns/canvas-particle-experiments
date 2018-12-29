@@ -1,0 +1,15 @@
+
+/* RESET */
+/* ---------------------------- */
+*{box-sizing: border-box;}
+html,body{margin:0;}
+div,section,header,footer,nav{display:block;float:left;width:100%;position:relative;}
+/* ---------------------------- */
+/* canvas{
+    position:absolute;
+    height:400px;
+    width:100%;
+    top:0;
+    left:0;
+    display:block;
+} */
