@@ -4,6 +4,7 @@ canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
 var c = canvas.getContext('2d');
 
+var colors = ['255, 188, 103','218, 114, 126','172, 108, 130','104, 92, 121','69, 92, 123'];
 
 var mouse = {
     x: undefined,
@@ -22,7 +23,7 @@ function Circle(x,y,dx,dy,rad){
         c.beginPath();
         c.arc(this.x, this.y, this.rad, 0, Math.PI*2, false);
         c.stroke();
-        c.strokeStyle = 'rgba(255,0,0,'+this.a+')';
+        c.strokeStyle = 'rgba('+colors[Math.floor(Math.random() * colors.length)]+','+this.a+')';
     }
 
     this.update = function(){
@@ -35,7 +36,7 @@ function Circle(x,y,dx,dy,rad){
 
         this.x += this.dx;
         this.y += this.dy;
-        this.a = this.a-0.05;
+        this.a = this.a-0.02;
 
         this.draw();
     }
