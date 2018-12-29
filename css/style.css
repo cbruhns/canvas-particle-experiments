@@ -13,3 +13,6 @@ div,section,header,footer,nav{display:block;float:left;width:100%;position:relat
     left:0;
     display:block;
 } */
+body{
+    background:#222;
+}

@@ -1,0 +1,1 @@
+1. Make expanding circles near borders bounce off if they grow large enough to touch the edge, rather than getting stuck.
