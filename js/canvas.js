@@ -12,6 +12,30 @@ var mouse = {
     y:undefined
 }
 
+function getMouse(e, c) {
+    var element = c,
+        offsetX = 0,
+        offsetY = 0,
+        mx, my;
+
+    if (element.offsetParent !== undefined) {
+        do {
+            offsetX += element.offsetLeft;
+            offsetY += element.offsetTop;
+        } while ((element = element.offsetParent));
+    }
+
+    mx = e.pageX - offsetX;
+    my = e.pageY - offsetY;
+
+    return {
+        x: mx,
+        y: my
+    };
+};
+
+
+
 window.addEventListener('mousemove', function(event){
     mouse.x = event.x;
     mouse.y = event.y;
@@ -58,10 +82,50 @@ function Circle(x,y,dx,dy,rad){
         this.draw();
     }
 
+    function idGen() {
+        var hash = function() {
+            return (((1+Math.random())*0x10000)|0).toString(16).substring(1);
+        };
+        return (hash()+hash()+"-"+hash()+"-"+hash()+"-"+hash()+"-"+hash()+hash()+hash());
+    }
+    this.id = idGen();
+
+    this.hitTest = function (x, y) {
+        var hx = x - this.x;
+        var hy = y - this.y;
+        return hx * hx + hy * hy <= this.rad * this.rad;
+    };
+
 }
 
+// Delete Circle
+canvas.addEventListener('click', function(event) {
+
+   var pt = getMouse(event, canvas);
+   var deleteCount = 0;
+   for (var i = 0;i < circleArray.length; i++) {
+       if (circleArray[i].hitTest(pt.x, pt.y)) {
+           circleArray.splice(i,1);
+           deleteCount++;
+       }
+   }
+   if (deleteCount === 0) {
+       var newCount = Math.floor(Math.random() * 5) + 1;
+       for (var i = 0; i < newCount; i++) {
+           var dx = (Math.random() - 0.5) * 2;
+           var dy = (Math.random() - 0.5) * 2;
+           var radius = Math.floor(Math.random() * 2)+3;
+           circleArray.push(new Circle(pt.x,pt.y,dx,dy,radius));
+       }
+   }
+
+}, false);
+
+
+
+
 var circleArray = [];
-for (var i = 0; i < 1000; i++) {
+for (var i = 0; i < 200; i++) {
     var x = Math.random() * (window.innerWidth - radius * 2) + radius;
     var y = Math.random() * (window.innerHeight - radius * 2) + radius;
     var dx = (Math.random() - 0.5) * 2;
